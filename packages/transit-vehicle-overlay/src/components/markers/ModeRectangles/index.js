@@ -6,18 +6,25 @@ import * as utils from "../../../utils";
  * Used with rectangular vehicle shapes.
  */
 function getRectangleSize(zoom) {
-  const veryCloseZoom = 19;
-  const closeZoom = 14;
-  const farZoom = 10;
+  const zoomToCorrectedWidth = {
+    9: 2.7,
+    10: 3.59,
+    11: 4.49,
+    12: 6,
+    13: 7.19,
+    14: 17.07,
+    15: 22.46,
+    16: 31.44,
+    17: 40,
+    18: 67.38,
+    19: 89.84,
+    20: 116.79
+  };
 
-  let size = zoom;
-  if (zoom >= veryCloseZoom) size = zoom * 3;
-  else if (zoom >= closeZoom) size = zoom * 2 + 3;
-  else if (zoom > farZoom) size = zoom + 6;
+  const spriteWidth = zoomToCorrectedWidth[zoom] || zoom;
 
-  return [size, size];
+  return [spriteWidth, spriteWidth]; // Assuming square icons for simplicity
 }
-
 export const LightRailVehicleRectangle = utils.makeRotatedMarker(
   utils.makeBasicVehicleShape(
     StyledRectangle.LgShape,
